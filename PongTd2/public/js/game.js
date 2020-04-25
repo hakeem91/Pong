@@ -251,10 +251,22 @@ socket.on('positionJ2Serv', positionJ2Serv => {
     } else if ( game.control.controlSystem == "MOUSE" ) {
       // mouse control
       if (game.playerOne.goUp && game.playerOne.posY > game.control.mousePointer){
-        game.playerOne.posY-=5;
+       if (socket.id == game.playerOne.socketOne){
+        game.playerOne.posY-=5;//}
+         socket.emit('positionJ1', {posJ1 : game.playerOne.posY});
+       }
+socket.on('positionJ1Serv', positionJ1Serv => {
+  game.playerOne.posY = positionJ1Serv.posJ1Serv; 
+ });
       }
       else if (game.playerOne.goDown && game.playerOne.posY < game.control.mousePointer){
-        game.playerOne.posY+=5;
+        if (socket.id == game.playerOne.socketOne){
+        game.playerOne.posY+=5;//}
+         socket.emit('positionJ1', {posJ1 : game.playerOne.posY});
+       }
+socket.on('positionJ1Serv', positionJ1Serv => {
+  game.playerOne.posY = positionJ1Serv.posJ1Serv; 
+ });
       }
     }
   },

@@ -54,7 +54,7 @@ game.control.controlSystem = "KEYBOARD"
    
   onMouseMove : function(event) {
     
-    /*game.control.controlSystem = "MOUSE";
+  /*  game.control.controlSystem = "MOUSE";
  
     if ( event ) {
       game.control.mousePointer = event.clientY;
