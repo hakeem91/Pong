@@ -1,0 +1,57 @@
+<html>
+ <body>
+ </body>
+<script src="js/game.js"></script>
+<script src="js/game_display.js"></script>
+<script src="js/game.control.js"></script>
+<script src="js/game.keycode.js"></script>
+<script src="js/game.ai.js"></script>
+<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+
+<script>
+(function () {
+  // début du code isolé
+  var requestAnimId;
+  const socket = io();
+  socket.emit('player', { name : 'timoleon', age : 12 } );
+    socket.emit('id', socket.id);
+
+  socket.on('idJoueur', idjoueur => console.log("L'id est"+idjoueur) );
+
+
+  var initialisation = function() {
+    // le code de l'initialisation
+
+    game.init();
+          socket.on('users', users =>{ console.log(users);game.socketOne(users);game.socketTwo(users);} );
+
+
+    requestAnimId = window.requestAnimationFrame(main); // premier appel de main au rafraîchissement de la page
+  }
+  
+  var main = function() {
+    // le code du jeu
+    
+
+    game.clearLayer(game.playersBallLayer);
+    game.movePlayers(socket);
+    game.displayPlayers();
+    
+    game.moveBall(socket);
+   game.lostBall(socket);
+    //game.ai.move();
+
+    game.collideBallWithPlayersAndAction();
+    requestAnimId = window.requestAnimationFrame(main); // rappel de main au prochain rafraichissement de la page
+  }
+  
+  window.onload = initialisation; // appel de la fonction initialisation au chargement de la page
+  
+  // fin du code isolé
+})();
+</script> 
+<div id="menu"><input id="startGame" type="button" value="Start Game"></div>
+  <div id="divGame"></div>
+</html>
+</html>
