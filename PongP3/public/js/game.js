@@ -184,10 +184,14 @@ this.posY = positionBallServ.posYServ;
   },
   
  
-  init : function() {
+  init : function(socket) {
     this.divGame = document.getElementById("divGame");
    this.startGameButton = document.getElementById("startGame");
-   this.initStartGameButton();
+   this.startGameButton.addEventListener('click', function() { 
+            game.control.onStartGameClickButton(socket); 
+       
+        }); 
+  
   this.groundLayer= game.display.createLayer("terrain", this.groundWidth, this.groundHeight, this.divGame, 0, "#000000", 10, 50); 
   game.display.drawRectangleInLayer(this.groundLayer, this.netWidth, this.groundHeight, this.netColor, this.groundWidth/2 - this.netWidth/2, 0);
      
@@ -242,11 +246,11 @@ this.posY = positionBallServ.posYServ;
       // keyboard control
 
       if ( game.playerOne.goUp ) {
-       // if (socket.id==game.playerOne.socketOne){
-              //socket.emit('Hakeem', { name : 'Hakeem', age : 12 } );
-              //socket.emit('Soso', socket.id );
+      
 if (socket.id == game.playerOne.socketOne){
+   if (game.playerOne.posY >5)
         game.playerOne.posY-=5;//}
+
          socket.emit('positionJ1', {posJ1 : game.playerOne.posY});
        }
 socket.on('positionJ1Serv', positionJ1Serv => {
@@ -263,7 +267,9 @@ socket.on('positionJ1Serv', positionJ1Serv => {
                
 
         if (socket.id == game.playerOne.socketOne){
+                  if (game.playerOne.posY  < game.groundHeight - game.playerOne.height-5)
         game.playerOne.posY+=5;//}
+
          socket.emit('positionJ1', {posJ1 : game.playerOne.posY});
        }
 socket.on('positionJ1Serv', positionJ1Serv => {
@@ -275,6 +281,8 @@ socket.on('positionJ1Serv', positionJ1Serv => {
       else if ( game.playerTwo.goDown ) {
                
         if (socket.id == game.playerTwo.socketTwo){
+                    if (game.playerTwo.posY >5)
+
         game.playerTwo.posY-=5;//}
          socket.emit('positionJ2', {posJ2 : game.playerTwo.posY});
        }
@@ -287,6 +295,7 @@ socket.on('positionJ2Serv', positionJ2Serv => {
                
 
         if (socket.id == game.playerTwo.socketTwo){
+            if (game.playerTwo.posY  < game.groundHeight - game.playerTwo.height-5)
         game.playerTwo.posY+=5;//}
          socket.emit('positionJ2', {posJ2 : game.playerTwo.posY});
        }
@@ -306,6 +315,8 @@ socket.on('positionJ2Serv', positionJ2Serv => {
 else if ( game.playerThree.goDown ) {
                
         if (socket.id == game.playerOne.socketOne){
+                    if (game.playerThree.posY >5)
+
         game.playerThree.posY-=5;//}
          socket.emit('positionJ3', {posJ3 : game.playerThree.posY});
        }
@@ -318,6 +329,7 @@ socket.on('positionJ3Serv', positionJ3Serv => {
                
 
         if (socket.id == game.playerOne.socketOne){
+            if (game.playerThree.posY  < game.groundHeight - game.playerThree.height-5)
         game.playerThree.posY+=5;//}
          socket.emit('positionJ3', {posJ3 : game.playerThree.posY});
        }
@@ -331,6 +343,8 @@ socket.on('positionJ3Serv', positionJ3Serv => {
   else if ( game.playerFour.goDown ) {
                
         if (socket.id == game.playerTwo.socketTwo){
+                    if (game.playerFour.posY >5)
+
         game.playerFour.posY-=5;//}
          socket.emit('positionJ4', {posJ4 : game.playerFour.posY});
        }
@@ -343,6 +357,7 @@ socket.on('positionJ4Serv', positionJ4Serv => {
                
 
         if (socket.id == game.playerTwo.socketTwo){
+            if (game.playerFour.posY  < game.groundHeight - game.playerFour.height-5)
         game.playerFour.posY+=5;//}
          socket.emit('positionJ4', {posJ4 : game.playerFour.posY});
        }

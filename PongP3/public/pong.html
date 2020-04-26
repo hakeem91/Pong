@@ -23,7 +23,7 @@
   var initialisation = function() {
     // le code de l'initialisation
 
-    game.init();
+    game.init(socket);
           socket.on('users', users =>{ console.log(users);game.socketOne(users);game.socketTwo(users);} );
 
 

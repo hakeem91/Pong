@@ -7,12 +7,10 @@ const express_1 = __importDefault(require("express"));
 const path_1 = __importDefault(require("path"));
 const path_2 = __importDefault(require("path"));
 var express = require('express');
-const ioController = require('../public/js/ioController.js');
-const Ssn_1 = require("./models/Ssn");
+
 const app = express_1.default();
 let http = require('http').Server(app);
 let io = require('socket.io')(http);
- let departement ="coucou";
 // ------------------------
 // ROUTE
 // ------------------------
@@ -144,7 +142,15 @@ socket.on('ScoreJ2', ScoreJ2 => {
 
 
 
+socket.on('Go', Go => {
 
+    
+  //  console.log(" La poition excacte est : "+posXS+" "+posYS);
+     io.emit('GoJeux',"GoJeux");
+ }
+
+
+  );
 
      });
 

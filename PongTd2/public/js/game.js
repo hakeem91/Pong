@@ -200,12 +200,11 @@ this.startGameButton.addEventListener('click', function() {
       // keyboard control
 
       if ( game.playerOne.goUp ) {
-       // if (socket.id==game.playerOne.socketOne){
-              //socket.emit('Hakeem', { name : 'Hakeem', age : 12 } );
-              //socket.emit('Soso', socket.id );
+    
 if (socket.id == game.playerOne.socketOne){
   if (game.playerOne.posY >5)
         game.playerOne.posY-=5;//}
+      
          socket.emit('positionJ1', {posJ1 : game.playerOne.posY});
        }
 socket.on('positionJ1Serv', positionJ1Serv => {
@@ -224,6 +223,7 @@ socket.on('positionJ1Serv', positionJ1Serv => {
         if (socket.id == game.playerOne.socketOne){
           if (game.playerOne.posY  < game.groundHeight - game.playerOne.height-5)
         game.playerOne.posY+=5;//}
+
          socket.emit('positionJ1', {posJ1 : game.playerOne.posY});
        }
 socket.on('positionJ1Serv', positionJ1Serv => {
