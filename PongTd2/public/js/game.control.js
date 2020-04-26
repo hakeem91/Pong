@@ -8,18 +8,11 @@ game.control = {
           
 game.control.controlSystem = "KEYBOARD"
     if ( event.keyCode == game.keycode.SPACEBAR  && !game.ball.inGame && game.gameOn ) { 
-      console.log(game.gameOn);
-      console.log("coucou");
-      game.ball.inGame = true;
-      game.ball.posX = game.playerOne.posX + game.playerOne.width;
-      game.ball.posY = game.playerOne.posY;
-      game.ball.directionX = 1;
-      game.ball.directionY = 1;
+     
 
     }
      game.playerOne.goDown = false;
       game.playerOne.goUp = false;
-
 
 
       
@@ -40,13 +33,32 @@ game.control.controlSystem = "KEYBOARD"
     game.playerTwo.goUp = true;
     }
   },
-  onStartGameClickButton : function() {
+  onStartGameClickButton : function(socket) {
    
     if ( !game.gameOn ) {
        //this.sound = new Audio("./sound/dvorak.mp3");
     //this.sound.play();
-      game.reinitGame();
-      game.gameOn = true;
+console.log("clicli cboom");
+
+
+
+     
+
+
+socket.emit('Go', {posJ1 : "game.playerOne.posY"});
+
+
+socket.on('GoJeux', GoJeux => {
+   game.reinitGame();
+    game.ball.inGame = true;
+      game.ball.posX = game.playerOne.posX + game.playerOne.width;
+      game.ball.posY = game.playerOne.posY;
+      game.ball.directionX = 1;
+      game.ball.directionY = 1;
+
+ });
+       game.gameOn = true;
+
     }
   },
    

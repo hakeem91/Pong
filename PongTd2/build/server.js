@@ -101,7 +101,15 @@ socket.on('ScoreJ2', ScoreJ2 => {
 
   );
 
+socket.on('Go', Go => {
 
+    
+  //  console.log(" La poition excacte est : "+posXS+" "+posYS);
+     io.emit('GoJeux',"GoJeux");
+ }
+
+
+  );
 
 
 

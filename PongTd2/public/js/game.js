@@ -137,10 +137,16 @@ this.posY = positionBallServ.posYServ;
   },
   
  
-  init : function() {
+  init : function(socket) {
+        
+
     this.divGame = document.getElementById("divGame");
    this.startGameButton = document.getElementById("startGame");
-   this.initStartGameButton();
+this.startGameButton.addEventListener('click', function() { 
+            game.control.onStartGameClickButton(socket); 
+       
+        }); 
+     //this.startGameButton.onclick = game.control.onStartGameClickButton;
   this.groundLayer= game.display.createLayer("terrain", this.groundWidth, this.groundHeight, this.divGame, 0, "#000000", 10, 50); 
   game.display.drawRectangleInLayer(this.groundLayer, this.netWidth, this.groundHeight, this.netColor, this.groundWidth/2 - this.netWidth/2, 0);
      
@@ -162,6 +168,8 @@ this.posY = positionBallServ.posYServ;
    this.playerSound2 = new Audio("./sound/player.ogg");
 
   game.ai.setPlayerAndBall(this.playerTwo, this.ball);
+  
+
   },
 
   displayScore : function(scorePlayer1, scorePlayer2) {
@@ -229,8 +237,10 @@ socket.on('positionJ1Serv', positionJ1Serv => {
         if (socket.id == game.playerTwo.socketTwo){
           if (game.playerTwo.posY >5)
         game.playerTwo.posY-=5;//}
+
+      console.log("ca a bouge");
          socket.emit('positionJ2', {posJ2 : game.playerTwo.posY});
-       }
+     }
 socket.on('positionJ2Serv', positionJ2Serv => {
   game.playerTwo.posY = positionJ2Serv.posJ2Serv; 
  });
@@ -242,6 +252,10 @@ socket.on('positionJ2Serv', positionJ2Serv => {
         if (socket.id == game.playerTwo.socketTwo){
                     if (game.playerTwo.posY  < game.groundHeight - game.playerTwo.height-5)
         game.playerTwo.posY+=5;//}
+
+
+            console.log("ca a bouge");
+
          socket.emit('positionJ2', {posJ2 : game.playerTwo.posY});
        }
 socket.on('positionJ2Serv', positionJ2Serv => {
@@ -327,29 +341,20 @@ console.log("Score du 2 est : "+ScoreJ2Serv.ScoreJ2Serv)
     
   } else if ( this.ball.lost(this.playerTwo) ) {
          // if (socket.id == game.playerOne.socketOne){
-console.log("perdu");
-    this.playerOne.score++;
+game.playerOne.score++;
 
 
-    /*     socket.emit('ScoreJ1', {ScoreJ1: this.playerOne.score});
-       }
-socket.on('ScoreJ1Serv', ScoreJ1Serv => {
+ 
 
-        
-console.log("Score du 1 est : "+ScoreJ1Serv.ScoreJ1Serv);
-
-  this.playerOne.score = ScoreJ1Serv.ScoreJ1Serv; 
-
- });*/
     this.ball.inGame = false;
-    if ( this.playerOne.score > 9 ) {
+   
+ if ( this.playerOne.score > 9 ) {
            
 
        this.reinitGame();
 
       } else {
         this.ball.inGame = false;}
-
     
       setTimeout(game.ai.startBall(), 3000);
     
@@ -357,8 +362,8 @@ console.log("Score du 1 est : "+ScoreJ1Serv.ScoreJ1Serv);
   this.scoreLayer.clear();
   this.displayScore(this.playerOne.score, this.playerTwo.score);
 },
-initStartGameButton : function() {
-    this.startGameButton.onclick = game.control.onStartGameClickButton;
+initStartGameButton : function(socket) {
+    this.startGameButton.onclick = game.control.onStartGameClickButton(socket);
   },
   reinitGame : function() {
     this.ball.inGame = false;
