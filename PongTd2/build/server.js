@@ -47,10 +47,10 @@ users.push(socket.id);
    // console.log("Le player one est"+playerOne); 
      //socket.on('Soso', Soso => console.log(`Actuellement ${socket.id}`) );  // "écoute" côté serveur des messages 'player' émis par cocket
               socket.emit('users',users );
-              var posXS= 0;
-              var posYS=0;
-              var posJ1=0;
-               var posJ2=0;
+              var posXS= 1;
+              var posYS=1;
+              var posJ1=1;
+               var posJ2=1;
 var scoreJ1=0;
                var ScoreJ2=0;
   socket.on('positionBall', positionBall => {

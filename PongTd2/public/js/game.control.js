@@ -7,7 +7,7 @@ game.control = {
   onKeyDown : function(event) {
           
 game.control.controlSystem = "KEYBOARD"
-    if ( event.keyCode == game.keycode.SPACEBAR && !game.ball.inGame && game.gameOn ) { 
+    if ( event.keyCode == game.keycode.SPACEBAR  && !game.ball.inGame && game.gameOn ) { 
       console.log(game.gameOn);
       console.log("coucou");
       game.ball.inGame = true;
@@ -17,14 +17,26 @@ game.control.controlSystem = "KEYBOARD"
       game.ball.directionY = 1;
 
     }
-    if ( event.keyCode == game.keycode.KEYDOWN ) { 
+     game.playerOne.goDown = false;
+      game.playerOne.goUp = false;
+
+
+
+      
+
+    if ( event.keyCode == game.keycode.KEYDOWN && game.playerOne.posY < game.groundHeight - game.playerOne.height  ) { 
+      console.log(game.playerOne.posY);
     game.playerOne.goDown = true;
-    } else if ( event.keyCode == game.keycode.KEYUP ) { 
+    } else if ( event.keyCode == game.keycode.KEYUP&& game.playerOne.posY > 0 ) { 
+            console.log(game.playerOne.posY);
+
     game.playerOne.goUp = true;
     }
-    else if ( event.keyCode == game.keycode.S ) { 
+
+
+    else if ( event.keyCode == game.keycode.Z ) { 
     game.playerTwo.goDown = true;
-    } else if ( event.keyCode == game.keycode.Z ) { 
+    } else if ( event.keyCode == game.keycode.S ) { 
     game.playerTwo.goUp = true;
     }
   },
@@ -45,30 +57,30 @@ game.control.controlSystem = "KEYBOARD"
     game.playerOne.goUp = false;
     }
 
-    else if ( event.keyCode == game.keycode.S ) {
+    else if ( event.keyCode == game.keycode.Z ) {
       game.playerTwo.goDown = false;
-    } else if ( event.keyCode == game.keycode.Z ) {
+    } else if ( event.keyCode == game.keycode.S ) {
     game.playerTwo.goUp = false;
     }
   },
    
   onMouseMove : function(event) {
     
-  /*  game.control.controlSystem = "MOUSE";
+   game.control.controlSystem = "MOUSE";
  
     if ( event ) {
       game.control.mousePointer = event.clientY;
     }
   
-    if ( game.control.mousePointer > game.playerOne.posY ) {
+    if ( game.control.mousePointer > game.playerOne.posY  && game.playerOne.posY < game.groundHeight - game.playerOne.height+30 ) {
       game.playerOne.goDown = true;
       game.playerOne.goUp = false;
-    } else if ( game.control.mousePointer < game.playerOne.posY ) {
+    } else if ( game.control.mousePointer < game.playerOne.posY && game.playerOne.posY > 0 ) {
       game.playerOne.goDown = false;
       game.playerOne.goUp = true;
     } else {
       game.playerOne.goDown = false;
       game.playerOne.goUp = false;
-    }*/
+    }
   }
 };

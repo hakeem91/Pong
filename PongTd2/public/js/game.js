@@ -196,6 +196,7 @@ this.posY = positionBallServ.posYServ;
               //socket.emit('Hakeem', { name : 'Hakeem', age : 12 } );
               //socket.emit('Soso', socket.id );
 if (socket.id == game.playerOne.socketOne){
+  if (game.playerOne.posY >5)
         game.playerOne.posY-=5;//}
          socket.emit('positionJ1', {posJ1 : game.playerOne.posY});
        }
@@ -213,6 +214,7 @@ socket.on('positionJ1Serv', positionJ1Serv => {
                
 
         if (socket.id == game.playerOne.socketOne){
+          if (game.playerOne.posY  < game.groundHeight - game.playerOne.height-5)
         game.playerOne.posY+=5;//}
          socket.emit('positionJ1', {posJ1 : game.playerOne.posY});
        }
@@ -225,6 +227,7 @@ socket.on('positionJ1Serv', positionJ1Serv => {
       else if ( game.playerTwo.goDown ) {
                
         if (socket.id == game.playerTwo.socketTwo){
+          if (game.playerTwo.posY >5)
         game.playerTwo.posY-=5;//}
          socket.emit('positionJ2', {posJ2 : game.playerTwo.posY});
        }
@@ -237,6 +240,7 @@ socket.on('positionJ2Serv', positionJ2Serv => {
                
 
         if (socket.id == game.playerTwo.socketTwo){
+                    if (game.playerTwo.posY  < game.groundHeight - game.playerTwo.height-5)
         game.playerTwo.posY+=5;//}
          socket.emit('positionJ2', {posJ2 : game.playerTwo.posY});
        }
@@ -252,6 +256,7 @@ socket.on('positionJ2Serv', positionJ2Serv => {
       // mouse control
       if (game.playerOne.goUp && game.playerOne.posY > game.control.mousePointer){
        if (socket.id == game.playerOne.socketOne){
+                  if (game.playerOne.posY  >5)
         game.playerOne.posY-=5;//}
          socket.emit('positionJ1', {posJ1 : game.playerOne.posY});
        }
@@ -261,6 +266,7 @@ socket.on('positionJ1Serv', positionJ1Serv => {
       }
       else if (game.playerOne.goDown && game.playerOne.posY < game.control.mousePointer){
         if (socket.id == game.playerOne.socketOne){
+                    if (game.playerOne.posY  < game.groundHeight - game.playerOne.height-5)
         game.playerOne.posY+=5;//}
          socket.emit('positionJ1', {posJ1 : game.playerOne.posY});
        }
