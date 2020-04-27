@@ -71,12 +71,10 @@ lost : function(player) {
     bounce : function(soundToPlay) {
       if ( this.posX > game.groundWidth || this.posX < 0 ){
         this.directionX = -this.directionX;
-            //soundToPlay.play();
       }
 
       if ( this.posY > game.groundHeight || this.posY < 0  ){
         this.directionY = -this.directionY;      
-          //  soundToPlay.play();
       }
 
     },
@@ -97,29 +95,18 @@ lost : function(player) {
         this.inGame = false;
         setTimeout(game.ai.startBall(), 3000)
       }
-         //if (  positionBallServ.posXServ <=  660){
 
         
 this.posX = positionBallServ.posXServ;
 this.posY = positionBallServ.posYServ;
- // }
-         
-//if (socket.id == game.playerTwo.socketTwo){
-  
-           // this.posX = positionBallServ.posXServ; 
-            //this.posY = positionBallServ.posYServ;
-            
-           // 
+ 
           });
 
 
  
       if (socket.id == game.playerOne.socketOne){
 
-    //this.posX += this.directionX * this.speed;
-      //this.posY += this.directionY * this.speed;
-
-   // socket.emit('positionBall', {posX : this.posX, posY: this.posY});
+    
  }
   }
 
@@ -147,7 +134,6 @@ this.startGameButton.addEventListener('click', function() {
             game.control.onStartGameClickButton(socket); 
        
         }); 
-     //this.startGameButton.onclick = game.control.onStartGameClickButton;
   this.groundLayer= game.display.createLayer("terrain", this.groundWidth, this.groundHeight, this.divGame, 0, "#000000", 10, 50); 
   game.display.drawRectangleInLayer(this.groundLayer, this.netWidth, this.groundHeight, this.netColor, this.groundWidth/2 - this.netWidth/2, 0);
      
@@ -211,9 +197,7 @@ socket.on('positionJ1Serv', positionJ1Serv => {
  });
 
 
-          //if (socket.id==game.playerTwo.socketTwo){
-              //socket.emit('Hakeem', { name : 'Hakeem', age : 12 } );
-              //socket.emit('Soso', socket.id );
+        
 
         
       } else if ( game.playerOne.goDown ) {
@@ -325,7 +309,6 @@ this.scoreLayer.clear();
         var score2 = game.playerTwo.score;
   if ( this.ball.lost(this.playerOne) ) {
     console.log("Premier");
-       //   if (socket.id == game.playerOne.socketOne){
 if(socket.id == game.playerOne.socketOne)
     this.playerTwo.score++;
 
@@ -364,8 +347,9 @@ if(this.scoreLayer !== null){
   } else if ( this.ball.lost(this.playerTwo) ) {
          // if (socket.id == game.playerOne.socketOne){
     console.log("Second");
-
+     if(socket.id == game.playerOne.socketOne)
 this.playerOne.score++;
+
 
 
 
@@ -388,11 +372,16 @@ socket.on('ScoreServ', ScoreServ => {
  
         if (ScoreServ.ScoreJ1Serv != null){
            score1v = ScoreServ.ScoreJ1Serv;
+                   this.playerOne.score = score1v;
+
         }
 
          if (ScoreServ.ScoreJ2Serv != null){
            score2v = ScoreServ.ScoreJ2Serv;
+                   this.playerTwo.score = score2v;
+
         }
+        console.log(this.playerOne.score);
         if(this.scoreLayer !== null){
   this.scoreLayer.clear();
   this.displayScore(score1v, score2v);
@@ -420,12 +409,10 @@ initStartGameButton : function(socket) {
   collideBallWithPlayersAndAction : function() { 
     if ( this.ball.collide(game.playerOne) ){
       game.ball.directionX = -game.ball.directionX;
-        //this.playerSound.play();
     }
 
     if ( this.ball.collide(game.playerTwo) ){
       game.ball.directionX = -game.ball.directionX;
-       // this.playerSound2.play();
     }
 
   }

@@ -117,12 +117,10 @@ lost : function(player) {
     bounce : function(soundToPlay) {
       if ( this.posX > game.groundWidth || this.posX < 0 ){
         this.directionX = -this.directionX;
-            //soundToPlay.play();
       }
 
       if ( this.posY > game.groundHeight || this.posY < 0  ){
         this.directionY = -this.directionY;      
-          //  soundToPlay.play();
       }
 
     },
@@ -143,29 +141,18 @@ lost : function(player) {
         this.inGame = false;
         setTimeout(game.ai.startBall(), 3000)
       }
-         //if (  positionBallServ.posXServ <=  660){
 
         
 this.posX = positionBallServ.posXServ;
 this.posY = positionBallServ.posYServ;
- // }
-         
-//if (socket.id == game.playerTwo.socketTwo){
-  
-           // this.posX = positionBallServ.posXServ; 
-            //this.posY = positionBallServ.posYServ;
-            
-           // 
+ 
           });
 
 
  
       if (socket.id == game.playerOne.socketOne){
 
-    //this.posX += this.directionX * this.speed;
-      //this.posY += this.directionY * this.speed;
-
-   // socket.emit('positionBall', {posX : this.posX, posY: this.posY});
+    
  }
   }
 
@@ -248,7 +235,7 @@ this.posY = positionBallServ.posYServ;
       if ( game.playerOne.goUp ) {
       
 if (socket.id == game.playerOne.socketOne){
-   if (game.playerOne.posY >5)
+   if (game.playerOne.posY >0)
         game.playerOne.posY-=5;//}
 
          socket.emit('positionJ1', {posJ1 : game.playerOne.posY});
@@ -258,16 +245,13 @@ socket.on('positionJ1Serv', positionJ1Serv => {
  });
 
 
-          //if (socket.id==game.playerTwo.socketTwo){
-              //socket.emit('Hakeem', { name : 'Hakeem', age : 12 } );
-              //socket.emit('Soso', socket.id );
 
         
       } else if ( game.playerOne.goDown ) {
                
 
         if (socket.id == game.playerOne.socketOne){
-                  if (game.playerOne.posY  < game.groundHeight - game.playerOne.height-5)
+                  if (game.playerOne.posY  < game.groundHeight - game.playerOne.height)
         game.playerOne.posY+=5;//}
 
          socket.emit('positionJ1', {posJ1 : game.playerOne.posY});
@@ -281,7 +265,7 @@ socket.on('positionJ1Serv', positionJ1Serv => {
       else if ( game.playerTwo.goDown ) {
                
         if (socket.id == game.playerTwo.socketTwo){
-                    if (game.playerTwo.posY >5)
+                    if (game.playerTwo.posY >0)
 
         game.playerTwo.posY-=5;//}
          socket.emit('positionJ2', {posJ2 : game.playerTwo.posY});
@@ -295,7 +279,7 @@ socket.on('positionJ2Serv', positionJ2Serv => {
                
 
         if (socket.id == game.playerTwo.socketTwo){
-            if (game.playerTwo.posY  < game.groundHeight - game.playerTwo.height-5)
+            if (game.playerTwo.posY  < game.groundHeight - game.playerTwo.height)
         game.playerTwo.posY+=5;//}
          socket.emit('positionJ2', {posJ2 : game.playerTwo.posY});
        }
@@ -315,7 +299,7 @@ socket.on('positionJ2Serv', positionJ2Serv => {
 else if ( game.playerThree.goDown ) {
                
         if (socket.id == game.playerThree.socketThree){
-                    if (game.playerThree.posY >5)
+                    if (game.playerThree.posY >0)
 
         game.playerThree.posY-=5;//}
          socket.emit('positionJ3', {posJ3 : game.playerThree.posY});
@@ -329,7 +313,7 @@ socket.on('positionJ3Serv', positionJ3Serv => {
                
 
         if (socket.id == game.playerThree.socketThree){
-            if (game.playerThree.posY  < game.groundHeight - game.playerThree.height-5)
+            if (game.playerThree.posY  < game.groundHeight - game.playerThree.height)
         game.playerThree.posY+=5;//}
          socket.emit('positionJ3', {posJ3 : game.playerThree.posY});
        }
@@ -343,7 +327,7 @@ socket.on('positionJ3Serv', positionJ3Serv => {
   else if ( game.playerFour.goDown ) {
                
         if (socket.id == game.playerFour.socketFour){
-                    if (game.playerFour.posY >5)
+                    if (game.playerFour.posY >0)
 
         game.playerFour.posY-=5;//}
          socket.emit('positionJ4', {posJ4 : game.playerFour.posY});
@@ -357,7 +341,7 @@ socket.on('positionJ4Serv', positionJ4Serv => {
                
 
         if (socket.id == game.playerFour.socketFour){
-            if (game.playerFour.posY  < game.groundHeight - game.playerFour.height-5)
+            if (game.playerFour.posY  < game.groundHeight - game.playerFour.height)
         game.playerFour.posY+=5;//}
          socket.emit('positionJ4', {posJ4 : game.playerFour.posY});
        }
@@ -454,7 +438,7 @@ else {
         var score2 = game.playerTwo.score;
   if ( this.ball.lost(this.playerOne) ) {
     console.log("Premier");
-       //   if (socket.id == game.playerOne.socketOne){
+       
 if(socket.id == game.playerOne.socketOne)
     this.playerTwo.score++;
 
@@ -491,7 +475,6 @@ socket.on('ScoreServ', ScoreServ => {
       setTimeout(game.ai.startBall(), 3000);
     
   } else if ( this.ball.lost(this.playerTwo) ) {
-         // if (socket.id == game.playerOne.socketOne){
     console.log("Second");
 
 this.playerOne.score++;
@@ -547,24 +530,20 @@ initStartGameButton : function() {
   collideBallWithPlayersAndAction : function() { 
     if ( this.ball.collide(game.playerOne) ){
       game.ball.directionX = -game.ball.directionX;
-        //this.playerSound.play();
     }
 
     if ( this.ball.collide(game.playerTwo) ){
       game.ball.directionX = -game.ball.directionX;
-       // this.playerSound2.play();
     }
 
 
 
     if ( this.ball.collide(game.playerThree) ){
       game.ball.directionX = -game.ball.directionX;
-        //this.playerSound.play();
     }
 
     if ( this.ball.collide(game.playerFour) ){
       game.ball.directionX = -game.ball.directionX;
-       // this.playerSound2.play();
     }
 
   }

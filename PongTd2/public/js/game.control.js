@@ -36,8 +36,7 @@ game.control.controlSystem = "KEYBOARD"
   onStartGameClickButton : function(socket) {
    
     if ( !game.gameOn ) {
-       //this.sound = new Audio("./sound/dvorak.mp3");
-    //this.sound.play();
+       
 console.log("clicli cboom");
 
 
