@@ -12,3 +12,5 @@ Il est possible que le score se synchronise un peu mal au debut mais redevient n
 Si vous voyez qu'une raquette ne bouge pas sur un ecran, cela est sans doute du a l'initialisation. Re appyer sur toutes les touches cités en haut sur les onglets ou le problème apparait
 
 Pour lancer les programmes, aller dans le repertoire Build et lancez la commande : node server.js puis aller sur le localHost 3010
+
+A chaque ouverture d'onglet, appuyer sur les touches A/Z si c'est le mode 2 joueur ou AZER si c'est le mode 4 joueurs. Cliquez ensuite sur Start Game dans chaque partie.
