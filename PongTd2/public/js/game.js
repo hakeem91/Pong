@@ -18,9 +18,9 @@ gameOn : false,
 startGameButton : null,
 playerOne : {
     width : 10,
-    height : 50,
+    height : 55,
     color : "#FFFFFF",
-    posX : 30,
+    posX : 10,
     posY : 200,
     goUp : false,
     goDown : false,
@@ -32,9 +32,9 @@ playerOne : {
     
   playerTwo : {
     width : 10,
-    height : 50,
+    height : 55,
     color : "#FFFFFF",
-    posX : 650,
+    posX : 680,
     posY : 200,
     goUp : false,
     goDown : false,
@@ -61,6 +61,7 @@ lost : function(player) {
     var returnValue = false;
     if ( player.originalPosition == "left" && this.posX < player.posX - this.width ) {
       returnValue = true;
+
     } else if ( player.originalPosition == "right" && this.posX > player.posX + player.width ) {
       returnValue = true;
     }
@@ -92,7 +93,7 @@ lost : function(player) {
      
 
        socket.on('positionBallServ', positionBallServ => {
-       if (  positionBallServ.posXServ>  660){
+       if (  positionBallServ.posXServ>  game.playerTwo.posX+game.playerTwo.width){
         this.inGame = false;
         setTimeout(game.ai.startBall(), 3000)
       }
@@ -155,7 +156,6 @@ this.startGameButton.addEventListener('click', function() {
      
   this.playersBallLayer = game.display.createLayer("joueursetballe", this.groundWidth, this.groundHeight, this.divGame, 2, undefined, 10, 50);  
   game.display.drawTextInLayer(this.playersBallLayer, "JOUEURSETBALLE", "10px Arial", "#FF0000", 100, 100);
-     
   this.displayScore(0,0);
   this.displayBall(200,200);
   this.displayPlayers();
@@ -164,7 +164,6 @@ this.startGameButton.addEventListener('click', function() {
   this.initMouse(game.control.onMouseMove);
    
   this.wallSound = new Audio("./sound/wall.ogg");
-  this.playerSound = new Audio("./sound/player.ogg");
    this.playerSound2 = new Audio("./sound/player.ogg");
 
   game.ai.setPlayerAndBall(this.playerTwo, this.ball);
@@ -202,7 +201,7 @@ this.startGameButton.addEventListener('click', function() {
       if ( game.playerOne.goUp ) {
     
 if (socket.id == game.playerOne.socketOne){
-  if (game.playerOne.posY >5)
+  if (game.playerOne.posY >0)
         game.playerOne.posY-=5;//}
       
          socket.emit('positionJ1', {posJ1 : game.playerOne.posY});
@@ -221,7 +220,7 @@ socket.on('positionJ1Serv', positionJ1Serv => {
                
 
         if (socket.id == game.playerOne.socketOne){
-          if (game.playerOne.posY  < game.groundHeight - game.playerOne.height-5)
+          if (game.playerOne.posY  < game.groundHeight - game.playerOne.height)
         game.playerOne.posY+=5;//}
 
          socket.emit('positionJ1', {posJ1 : game.playerOne.posY});
@@ -235,7 +234,7 @@ socket.on('positionJ1Serv', positionJ1Serv => {
       else if ( game.playerTwo.goDown ) {
                
         if (socket.id == game.playerTwo.socketTwo){
-          if (game.playerTwo.posY >5)
+          if (game.playerTwo.posY >0)
         game.playerTwo.posY-=5;//}
 
       console.log("ca a bouge");
@@ -250,7 +249,7 @@ socket.on('positionJ2Serv', positionJ2Serv => {
                
 
         if (socket.id == game.playerTwo.socketTwo){
-                    if (game.playerTwo.posY  < game.groundHeight - game.playerTwo.height-5)
+                    if (game.playerTwo.posY  < game.groundHeight - game.playerTwo.height)
         game.playerTwo.posY+=5;//}
 
 
@@ -270,7 +269,7 @@ socket.on('positionJ2Serv', positionJ2Serv => {
       // mouse control
       if (game.playerOne.goUp && game.playerOne.posY > game.control.mousePointer){
        if (socket.id == game.playerOne.socketOne){
-                  if (game.playerOne.posY  >5)
+                  if (game.playerOne.posY  >0)
         game.playerOne.posY-=5;//}
          socket.emit('positionJ1', {posJ1 : game.playerOne.posY});
        }
@@ -280,7 +279,7 @@ socket.on('positionJ1Serv', positionJ1Serv => {
       }
       else if (game.playerOne.goDown && game.playerOne.posY < game.control.mousePointer){
         if (socket.id == game.playerOne.socketOne){
-                    if (game.playerOne.posY  < game.groundHeight - game.playerOne.height-5)
+                    if (game.playerOne.posY  < game.groundHeight - game.playerOne.height)
         game.playerOne.posY+=5;//}
          socket.emit('positionJ1', {posJ1 : game.playerOne.posY});
        }
@@ -308,59 +307,105 @@ socket.on('positionJ1Serv', positionJ1Serv => {
     return;
   }
   },
+  updateScore: function(score1,score2){
+this.playerOne.score=score1;
+this.playerTwo.score=score2;
+
+this.scoreLayer.clear();
+      this.displayScore(this.playerOne.score, this.playerTwo.score);
+
+  },
   initMouse : function(onMouseMoveFunction) {
     window.onmousemove = onMouseMoveFunction;
   },
   lostBall : function(socket) {
+    var score1v =0;
+  var score2v =0;
+    var score1 = game.playerOne.score;
+        var score2 = game.playerTwo.score;
   if ( this.ball.lost(this.playerOne) ) {
+    console.log("Premier");
        //   if (socket.id == game.playerOne.socketOne){
-
+if(socket.id == game.playerOne.socketOne)
     this.playerTwo.score++;
 
- 
-         
 
- /*socket.emit('ScoreJ2', {ScoreJ2: this.playerTwo.score});
-}
-       
-socket.on('ScoreJ2Serv', ScoreJ2Serv => {
-        if (socket.id == game.playerTwo.socketTwo){
-console.log("Score du 2 est : "+ScoreJ2Serv.ScoreJ2Serv)
-  this.playerTwo.score = ScoreJ2Serv.ScoreJ2Serv; 
-}
-});*/
-    this.ball.inGame = false;
-     if ( this.playerTwo.score > 9 ) {
-      
-   this.reinitGame();
-      } else {
-        this.ball.inGame = false;}
-     
-   
-      setTimeout(game.ai.startBall(), 3000);
-    
-  } else if ( this.ball.lost(this.playerTwo) ) {
-         // if (socket.id == game.playerOne.socketOne){
-game.playerOne.score++;
-
-
- 
-
-    this.ball.inGame = false;
-   
- if ( this.playerOne.score > 9 ) {
+          if ( this.playerTwo.score > 4 ) {
            
 
        this.reinitGame();
 
       } else {
-        this.ball.inGame = false;}
+
+    this.ball.inGame = false;
+    }
+     if(socket.id == game.playerOne.socketOne)
+   socket.emit('Score', {ScoreJ1: this.playerOne.score, ScoreJ2 : this.playerTwo.score});
+
+socket.on('ScoreServ', ScoreServ => {
+ 
+        if (ScoreServ.ScoreJ1Serv != null){
+           score1v = ScoreServ.ScoreJ1Serv;
+        }
+
+         if (ScoreServ.ScoreJ2Serv != null){
+           score2v = ScoreServ.ScoreJ2Serv;
+        }
+if(this.scoreLayer !== null){
+  this.scoreLayer.clear();
+  this.displayScore(score1v, score2v);
+
+}
+ 
+});
+      setTimeout(game.ai.startBall(), 3000);
     
+
+  } else if ( this.ball.lost(this.playerTwo) ) {
+         // if (socket.id == game.playerOne.socketOne){
+    console.log("Second");
+
+this.playerOne.score++;
+
+
+
+ 
+
+   
+ if ( this.playerOne.score > 4 ) {
+           
+
+       this.reinitGame();
+
+      } else {
+        this.ball.inGame = false
+      }
+
+      if(socket.id == game.playerOne.socketOne)
+    socket.emit('Score', {ScoreJ1: this.playerOne.score, ScoreJ2 : this.playerTwo.score});
+
+socket.on('ScoreServ', ScoreServ => {
+ 
+        if (ScoreServ.ScoreJ1Serv != null){
+           score1v = ScoreServ.ScoreJ1Serv;
+        }
+
+         if (ScoreServ.ScoreJ2Serv != null){
+           score2v = ScoreServ.ScoreJ2Serv;
+        }
+        if(this.scoreLayer !== null){
+  this.scoreLayer.clear();
+  this.displayScore(score1v, score2v);
+ 
+ }
+});
+
+
       setTimeout(game.ai.startBall(), 3000);
     
   }
-  this.scoreLayer.clear();
-  this.displayScore(this.playerOne.score, this.playerTwo.score);
+  
+  
 },
 initStartGameButton : function(socket) {
     this.startGameButton.onclick = game.control.onStartGameClickButton(socket);

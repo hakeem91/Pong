@@ -1,12 +1,12 @@
 game.keycode = {
  
-  KEYDOWN : 40,
-  KEYUP : 38,
+  KEYDOWN : 81,
+  KEYUP : 65,
   SPACEBAR : 32,
-  Z : 90,
-  S : 83,
+  Z : 83,
+  S : 90,
   E : 69,
   D : 68,
-  P : 80,
-  M : 77
+  P : 82,
+  M : 70
 }

@@ -7,6 +7,7 @@ const express_1 = __importDefault(require("express"));
 const path_1 = __importDefault(require("path"));
 const path_2 = __importDefault(require("path"));
 var express = require('express');
+
 //const ioController = require('../public/js/ioController.js');
 //const Ssn_1 = require("./models/Ssn");
 const app = express_1.default();
@@ -21,6 +22,8 @@ app.get('/', (req, res) => {
 });
 
 app.use("/js", express.static('../public/js/'));
+app.use("/css", express.static('../public/css/'));
+
 app.use("/sound", express.static('../public/sound/'));
 
 // ------------------------
@@ -52,7 +55,7 @@ users.push(socket.id);
               var posJ1=1;
                var posJ2=1;
 var scoreJ1=0;
-               var ScoreJ2=0;
+               var scoreJ2=0;
   socket.on('positionBall', positionBall => {
   
     posXS = positionBall.posX; 
@@ -100,6 +103,26 @@ socket.on('ScoreJ2', ScoreJ2 => {
 
 
   );
+
+
+
+
+socket.on('Score', Score => {
+
+    scoreJ1 = Score.ScoreJ1;
+    scoreJ2 = Score.ScoreJ2;
+  //  console.log(" La poition excacte est : "+posXS+" "+posYS);
+     io.emit('ScoreServ',{ScoreJ1Serv : scoreJ1,ScoreJ2Serv : scoreJ2});
+ }
+
+
+  );
+
+
+
+
+
+
 
 socket.on('Go', Go => {
 

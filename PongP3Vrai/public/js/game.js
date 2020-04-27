@@ -20,7 +20,7 @@ playerOne : {
     width : 10,
     height : 50,
     color : "#FFFFFF",
-    posX : 30,
+    posX : 10,
     posY : 200,
     goUp : false,
     goDown : false,
@@ -34,7 +34,7 @@ playerOne : {
     width : 10,
     height : 50,
     color : "#FFFFFF",
-    posX : 650,
+    posX : 680,
     posY : 200,
     goUp : false,
     goDown : false,
@@ -57,7 +57,7 @@ playerThree : {
     width : 10,
     height : 50,
     color : "#FFFFFF",
-    posX : 30,
+    posX : 10,
     posY : 300,
     goUp : false,
     goDown : false,
@@ -71,7 +71,7 @@ playerThree : {
     width : 10,
     height : 50,
     color : "#FFFFFF",
-    posX : 650,
+    posX : 680,
     posY : 30,
     goUp : false,
     goDown : false,
@@ -139,7 +139,7 @@ lost : function(player) {
      
 
        socket.on('positionBallServ', positionBallServ => {
-       if (  positionBallServ.posXServ>  660){
+       if (  positionBallServ.posXServ>  game.playerTwo.posx + game.playerTwo.width){
         this.inGame = false;
         setTimeout(game.ai.startBall(), 3000)
       }
@@ -448,64 +448,91 @@ else {
     window.onmousemove = onMouseMoveFunction;
   },
   lostBall : function(socket) {
+    var score1v =0;
+  var score2v =0;
+    var score1 = game.playerOne.score;
+        var score2 = game.playerTwo.score;
   if ( this.ball.lost(this.playerOne) ) {
+    console.log("Premier");
        //   if (socket.id == game.playerOne.socketOne){
-
+if(socket.id == game.playerOne.socketOne)
     this.playerTwo.score++;
 
- 
-         
 
- /*socket.emit('ScoreJ2', {ScoreJ2: this.playerTwo.score});
-}
-       
-socket.on('ScoreJ2Serv', ScoreJ2Serv => {
-        if (socket.id == game.playerTwo.socketTwo){
-console.log("Score du 2 est : "+ScoreJ2Serv.ScoreJ2Serv)
-  this.playerTwo.score = ScoreJ2Serv.ScoreJ2Serv; 
-}
-});*/
-    this.ball.inGame = false;
-     if ( this.playerTwo.score > 9 ) {
-      
-   this.reinitGame();
-      } else {
-        this.ball.inGame = false;}
-     
-   
-      setTimeout(game.ai.startBall(), 3000);
-    
-  } else if ( this.ball.lost(this.playerTwo) ) {
-         // if (socket.id == game.playerOne.socketOne){
-console.log("perdu");
-    this.playerOne.score++;
-
-
-    /*     socket.emit('ScoreJ1', {ScoreJ1: this.playerOne.score});
-       }
-socket.on('ScoreJ1Serv', ScoreJ1Serv => {
-
-        
-console.log("Score du 1 est : "+ScoreJ1Serv.ScoreJ1Serv);
-
-  this.playerOne.score = ScoreJ1Serv.ScoreJ1Serv; 
-
- });*/
-    this.ball.inGame = false;
-    if ( this.playerOne.score > 9 ) {
+          if ( this.playerTwo.score > 4 ) {
            
 
        this.reinitGame();
 
-      } else {
-        this.ball.inGame = false;}
+      } 
 
+    this.ball.inGame = false;
     
+     if(socket.id == game.playerOne.socketOne)
+   socket.emit('Score', {ScoreJ1: this.playerOne.score, ScoreJ2 : this.playerTwo.score});
+
+socket.on('ScoreServ', ScoreServ => {
+ 
+        if (ScoreServ.ScoreJ1Serv != null){
+           score1v = ScoreServ.ScoreJ1Serv;
+        }
+
+         if (ScoreServ.ScoreJ2Serv != null){
+           score2v = ScoreServ.ScoreJ2Serv;
+        }
+  this.scoreLayer.clear();
+  this.displayScore(score1v, score2v);
+  game.ball.inGame = true;
+      game.ball.posX = game.playerOne.posX + game.playerOne.width;
+      game.ball.posY = game.playerOne.posY;
+      game.ball.directionX = 1;
+      game.ball.directionY = 1;
+});
+      setTimeout(game.ai.startBall(), 3000);
+    
+  } else if ( this.ball.lost(this.playerTwo) ) {
+         // if (socket.id == game.playerOne.socketOne){
+    console.log("Second");
+
+this.playerOne.score++;
+
+
+
+ 
+
+    this.ball.inGame = false;
+   
+ if ( this.playerOne.score > 4 ) {
+           
+
+       this.reinitGame();
+
+      } 
+      if(socket.id == game.playerOne.socketOne)
+    socket.emit('Score', {ScoreJ1: this.playerOne.score, ScoreJ2 : this.playerTwo.score});
+
+socket.on('ScoreServ', ScoreServ => {
+ 
+        if (ScoreServ.ScoreJ1Serv != null){
+           score1v = ScoreServ.ScoreJ1Serv;
+        }
+
+         if (ScoreServ.ScoreJ2Serv != null){
+           score2v = ScoreServ.ScoreJ2Serv;
+        }
+  this.scoreLayer.clear();
+  this.displayScore(score1v, score2v);
+   game.ball.inGame = true;
+      game.ball.posX = game.playerOne.posX + game.playerOne.width;
+      game.ball.posY = game.playerOne.posY;
+      game.ball.directionX = 1;
+      game.ball.directionY = 1;
+});
       setTimeout(game.ai.startBall(), 3000);
     
   }
-  this.scoreLayer.clear();
-  this.displayScore(this.playerOne.score, this.playerTwo.score);
+  
+  
 },
 initStartGameButton : function() {
     this.startGameButton.onclick = game.control.onStartGameClickButton;

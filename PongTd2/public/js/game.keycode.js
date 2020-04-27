@@ -1,7 +1,7 @@
 game.keycode = {
  
-  KEYDOWN : 40,
-  KEYUP : 38,
+  KEYDOWN : 81,
+  KEYUP : 65,
   SPACEBAR : 32,
   Z : 90,
   S : 83,

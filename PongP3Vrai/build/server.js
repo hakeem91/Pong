@@ -20,6 +20,7 @@ app.get('/', (req, res) => {
 
 app.use("/js", express.static('../public/js/'));
 app.use("/sound", express.static('../public/sound/'));
+app.use("/css", express.static('../public/css/'));
 
 // ------------------------
 // // -- Catch a connection
@@ -52,7 +53,7 @@ users.push(socket.id);
                var posJ3=0;
                var posJ4=0;
 var scoreJ1=0;
-               var ScoreJ2=0;
+               var scoreJ2=0;
   socket.on('positionBall', positionBall => {
   
     posXS = positionBall.posX; 
@@ -140,7 +141,16 @@ socket.on('ScoreJ2', ScoreJ2 => {
 
   );
 
+socket.on('Score', Score => {
 
+    scoreJ1 = Score.ScoreJ1;
+    scoreJ2 = Score.ScoreJ2;
+  //  console.log(" La poition excacte est : "+posXS+" "+posYS);
+     io.emit('ScoreServ',{ScoreJ1Serv : scoreJ1,ScoreJ2Serv : scoreJ2});
+ }
+
+
+  );
 
 socket.on('Go', Go => {
 
