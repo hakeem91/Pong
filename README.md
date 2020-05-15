@@ -15,4 +15,4 @@ Pour lancer les programmes, aller dans le repertoire Build et lancez la commande
 
 A chaque ouverture d'onglet, appuyer sur les touches A/Z si c'est le mode 2 joueur ou AZER si c'est le mode 4 joueurs. Cliquez ensuite sur Start Game dans chaque partie.
 
-Les fichiers PongTd2MisAJour et Td3MisAjour sont les versions qui fonctionnen sans probleme de score et sans avoir besoin de synchroniser les touches au début
+Les fichiers PongTd2MisAJour et Td3MisAjour sont les versions qui fonctionnent sans probleme de score et sans avoir besoin de synchroniser les touches au début. Les parties se lancent automatiquement sans appuyer sur start game. 
