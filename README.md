@@ -14,3 +14,5 @@ Si vous voyez qu'une raquette ne bouge pas sur un ecran, cela est sans doute du 
 Pour lancer les programmes, aller dans le repertoire Build et lancez la commande : node server.js puis aller sur le localHost 3010
 
 A chaque ouverture d'onglet, appuyer sur les touches A/Z si c'est le mode 2 joueur ou AZER si c'est le mode 4 joueurs. Cliquez ensuite sur Start Game dans chaque partie.
+
+Les fichiers PongTd2MisAJour et Td3MisAjour sont les versions qui fonctionnen sans probleme de score et sans avoir besoin de synchroniser les touches au début
